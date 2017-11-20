@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="js/main.js"></script>
+        <link href="css/styles.css" rel="stylesheet">
+    </head>
+    <body onload="display()" id="111">
+        <div class="container">
+            <div class="col-md-12">
+                <div class="page-header" align="center">
+                    <h1>Student Details Management Portal</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" data-toggle="collapse" data-target="#table-colp" href="#" onclick="display()">Display</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                <li><a href="#" data-toggle="collapse" data-target="#form-colp" onclick="insertRecord()">Insert</a></li>
+                                <li><a href="#" onclick="deleteRecord()">Delete</a></li>
+                                <li><a href="#" onclick="editRecord()">Edit</a></li>
+                       
+                            </ul>                     
+                        </div>
+                    </nav>
+                </div>
+            </div>  
+           
+            <div class="row">
+                <div class="col-md-12" id="div1">
+                    <div id="form-colp" class="collapse">
+                        <form onsubmit="funcall()">
+                            <div class="form-group">
+                                <label>Enter name of Student :</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter roll no. of Student : </label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter Passout Year of Student : </label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter Stream of Student : </label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <input type="submit" class="btn btn-danger navbar-btn"></>
+                        </form>      
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="table-colp" class="collapse in table-responsive">
+                        <table class = "table">
+                            <thead class = "thead-inverse">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Roll Number</th>
+                                    <th>Passout Year</th>
+                                    <th>Stream</th>
+                                    <th>         
+                                            <a class="btn btn-danger" href="#">
+                                                    <i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                                                 
+                                </tr>
+                            </thead>               
+                        </table>                            
+                    </div>
+                    <p id = "alertEmpty"></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
