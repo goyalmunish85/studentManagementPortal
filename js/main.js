@@ -10,6 +10,12 @@ let studentArr = [
         "rollnoOfStudent" : "1510991072",
         "passout" : "2019",
         "stream" : "CSE"
+    },
+    {
+        "nameOfStudent" : "Gurpreet Singh",
+        "rollnoOfStudent" : "1510991223",
+        "passout" : "2019",
+        "stream" : "CSE"
     }
 ];
 
@@ -28,14 +34,33 @@ function insertRecord()
 }
 function dRecord(d)
 {
-    let el = document.getElementsByTagName("tbody");
-    el[0].parentElement.removeChild(el[0]);
-    studentArr.splice(d,1);
-    display();
+    swal({
+        title: "Are you sure?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            let el = document.getElementsByTagName("tbody");
+            el[0].parentElement.removeChild(el[0]);
+            studentArr.splice(d,1);
+            display();
+          swal("Deleted!", {
+            icon: "success",
+          });
+        } else {
+          display();
+          $("#table-colp").collapse('show');
+          swal("Cancel!",{
+            icon:"error",
+        });
+        }
+      });
+
+    
 }
 let ins;
-
-
 function iRecord()
 {
     $("#form-colp").collapse('hide');
@@ -55,9 +80,55 @@ function iRecord()
     studentObj.stream = i[3].value;
     i[3].value = "";
     studentArr.push(studentObj);
+    swal({
+        title: "Done!",
+        icon: "success"
+    }).then((val)=>{
+        display();
+        $("#table-colp").collapse('show');
+    });
 }
+function deleteAll()
+{
+    swal({
+        title: "Are you sure?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            studentArr.splice(0,studentArr.length);
+            let el = document.getElementsByTagName("tbody");
+            el[0].parentElement.removeChild(el[0]);
+            display();
+          swal("Deleted!", {
+            icon: "success",
+          });
+        } else {
+          display();
+          $("#table-colp").collapse('show');
+          swal("Cancel!",{
+            icon:"error",
+        });
+        }
+      });
+   
+    
+}
+$(document).ready(function(){
+        $(function() {
+            $('li a').click(function(e) {
+                e.preventDefault();
+                $('li').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    });
 function deleteRecord()
 {
+
+    let flag = false;
     $("#form-colp").collapse('hide');
     $("#table-colp").collapse('show');
     swal("Enter Roll No. of Student:", {
@@ -69,6 +140,15 @@ function deleteRecord()
             studentArr.forEach((element, index) => {
                 if(element.rollnoOfStudent === value) {
                     dRecord(index);
+                    flag = true;
+                }
+                if(flag == false)
+                {
+                  swal({
+                      title: "Invalid! Roll No.",
+                      icon: "warning",
+                    });
+                    
                 }
             });
         }
@@ -76,6 +156,7 @@ function deleteRecord()
 }
 function editRecord()
 {
+    let flag = false;
     $("#form-colp").collapse('hide');
     $("#table-colp").collapse('show');
     swal("Enter Roll No. of Student:", {
@@ -87,10 +168,20 @@ function editRecord()
             studentArr.forEach((element, index) => {
                 if(element.rollnoOfStudent === value) {
                     eRecord(index);
+                    flag = true;
                 }
             });
         }
+        if(flag == false)
+        {
+          swal({
+              title: "Invalid! Roll No.",
+              icon: "warning",
+            });
+            
+        }
       });
+     
 }
 function eRecord(e)
 {
@@ -106,6 +197,7 @@ function eRecord(e)
     i[3].value = studentArr[e].stream;
     insertcall = false;
     ins =e;
+    
 }
 function rRecord()
 {
@@ -115,11 +207,24 @@ function rRecord()
     studentArr[ins].rollnoOfStudent = i[1].value;
     studentArr[ins].passout = i[2].value;
     studentArr[ins].stream = i[3].value;
+    swal({
+        title: "Done!",
+        icon: "success"
+    }).then((val)=>{
+        display();
+        $("#table-colp").collapse('show');
+    });
 }
 
 function display()
 {   
+   
+    $(".alert").hide();
     $("#form-colp").collapse('hide');
+    if(studentArr.length == 0)
+    {
+        $(".alert").show();
+    }
     if(document.getElementsByTagName("tbody").length==0)
     {
         let element = document.getElementsByTagName("table");
@@ -177,10 +282,32 @@ function funcall()
     }
     if(insertcall == true)
     {
+        
         iRecord();
     }
     else if(replaceCall == true)
     {
-        rRecord();
+        swal({
+            title: "Are you sure?",
+            text:  `
+                ${studentArr[ins].nameOfStudent} -
+                ${studentArr[ins].rollnoOfStudent} is to be edit
+            `,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                rRecord();
+            } else {
+              display();
+              $("#table-colp").collapse('show');
+              swal("Cancel!",{
+                  icon:"error",
+              });
+            }
+          });
+        
     }
 }
